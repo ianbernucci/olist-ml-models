@@ -30,18 +30,22 @@ SELECT idVendedor,
   SUM(CASE WHEN descTipoPagamento = 'credit_card' THEN qtd_vendas ELSE 0 END) AS qtd_vendas_credit_card,
   SUM(CASE WHEN descTipoPagamento = 'credit_card' THEN valor_total ELSE 0 END) AS valor_vendas_credit_card,
   SUM(CASE WHEN descTipoPagamento = 'credit_card' THEN qtd_vendas ELSE 0 END) / SUM(qtd_vendas) AS perc_qtd_vendas_credit_card,
+  sum(case when descTipoPagamento='credit_card' then valor_total else 0 end) / sum(valor_total) as perc_valor_vendas_credit_card,
 
   SUM(CASE WHEN descTipoPagamento = 'debit_card' THEN qtd_vendas ELSE 0 END) AS qtd_vendas_debit_card,
   SUM(CASE WHEN descTipoPagamento = 'debit_card' THEN valor_total ELSE 0 END) AS valor_vendas_debit_card,
   SUM(CASE WHEN descTipoPagamento = 'debit_card' THEN qtd_vendas ELSE 0 END) / SUM(qtd_vendas) AS perc_qtd_vendas_debit_card,
+  sum(case when descTipoPagamento='debit_card' then valor_total else 0 end) / sum(valor_total) as perc_valor_vendas_debit_card,
 
   SUM(CASE WHEN descTipoPagamento = 'boleto' THEN qtd_vendas ELSE 0 END) AS qtd_vendas_boleto,
   SUM(CASE WHEN descTipoPagamento = 'boleto' THEN valor_total ELSE 0 END) AS valor_vendas_boleto,
   SUM(CASE WHEN descTipoPagamento = 'boleto' THEN qtd_vendas ELSE 0 END) / SUM(qtd_vendas) AS perc_qtd_vendas_boleto,
+  sum(case when descTipoPagamento='boleto' then valor_total else 0 end) / sum(valor_total) as perc_valor_vendas_boleto,
 
   SUM(CASE WHEN descTipoPagamento = 'voucher' THEN qtd_vendas ELSE 0 END) AS qtd_vendas_voucher,
   SUM(CASE WHEN descTipoPagamento = 'voucher' THEN valor_total ELSE 0 END) AS valor_vendas_voucher,
-  SUM(CASE WHEN descTipoPagamento = 'voucher' THEN qtd_vendas ELSE 0 END) / SUM(qtd_vendas) AS perc_qtd_vendas_voucher
+  SUM(CASE WHEN descTipoPagamento = 'voucher' THEN qtd_vendas ELSE 0 END) / SUM(qtd_vendas) AS perc_qtd_vendas_voucher,
+  sum(case when descTipoPagamento='voucher' then valor_total else 0 end) / sum(valor_total) as perc_valor_vendas_voucher
 
 FROM base_agrupada
 
