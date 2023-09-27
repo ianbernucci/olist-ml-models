@@ -1,4 +1,3 @@
--- Databricks notebook source
 WITH base_pedido AS (
   SELECT DISTINCT
     a.idPedido,
@@ -9,8 +8,8 @@ WITH base_pedido AS (
   LEFT JOIN silver.olist.item_pedido AS b
     ON a.idPedido = b.idPedido
 
-  WHERE a.dtPedido < '2018-01-01'
-    AND a.dtPedido >= add_months('2018-01-01', -6)
+  WHERE a.dtPedido < '{date}'
+    AND a.dtPedido >= add_months('{date}', -6)
     AND b.idVendedor IS NOT NULL ),
 
 
@@ -38,10 +37,10 @@ base_resumo AS (
 
 
 SELECT *,
-  '2018-01-01' AS data_referencia
+  '{date}' AS data_referencia,
+  NOW() AS dtIngestion
 
 FROM base_resumo
-
 
 
 

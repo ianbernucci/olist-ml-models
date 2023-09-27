@@ -1,4 +1,3 @@
--- Databricks notebook source
 WITH base_geral AS ( 
 SELECT DISTINCT
   b.idVendedor, 
@@ -12,8 +11,8 @@ LEFT JOIN silver.olist.item_pedido AS b
 LEFT JOIN silver.olist.produto AS c
   ON b.idProduto = c.idProduto
 
-WHERE a.dtPedido < '2018-01-01'
-  AND a.dtPedido >= add_months('2018-01-01', -6)
+WHERE a.dtPedido < '{date}'
+  AND a.dtPedido >= add_months('{date}', -6)
   AND b.idVendedor IS NOT NULL),
 
 
@@ -47,7 +46,8 @@ FROM base_geral
 GROUP BY idVendedor)
 
 SELECT *,
-  '2018-01-01' AS data_referencia
+  '{date}' AS data_referencia,
+  NOW() AS dtIngestion
   
 FROM base_resumo
 
@@ -58,20 +58,3 @@ FROM base_resumo
 
 
 
-
-
--- COMMAND ----------
-
-SELECT descCategoria
-
-FROM silver.olist.item_pedido AS b
-
-LEFT JOIN silver.olist.produto AS c
-  ON b.idProduto = c.idProduto
-
-WHERE b.idVendedor IS NOT NULL
-
-GROUP BY ALL
-ORDER BY COUNT(DISTINCT idPedido) DESC
-
-LIMIT 15
