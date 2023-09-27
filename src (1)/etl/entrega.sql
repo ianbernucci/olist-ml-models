@@ -15,7 +15,7 @@ WITH base_pedido AS(
 
   WHERE a.dtPedido < '{date}'
     AND a.dtPedido >= add_months('{date}', -6)
-    AND idVendedor IS NOT NULL)
+    AND idVendedor IS NOT NULL
 
   GROUP BY a.idPedido,
   b.idVendedor,
@@ -41,6 +41,6 @@ WITH base_pedido AS(
 
   FROM base_pedido
 
-  GROUP BY idVendedor
+  GROUP BY idVendedor, data_referencia, dtIngestion
 
 
