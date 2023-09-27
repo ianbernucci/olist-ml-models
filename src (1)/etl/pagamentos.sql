@@ -1,21 +1,3 @@
--- Databricks notebook source
-SELECT *
-FROM silver.olist.pagamento_pedido
-TABLESAMPLE(5 ROWS)
-
--- COMMAND ----------
-
-SELECT DATE(dtPedido) AS dtPedido,
-  COUNT(*) AS qtPedido
-FROM silver.olist.pedido 
-WHERE dtPedido < '2018-01-01'
-  AND dtPedido >= ADD_MONTHS('2018-01-01', -6)
-GROUP BY 1
-ORDER BY 1
-
-
--- COMMAND ----------
-
 WITH base_geral AS (
 SELECT a.*,
   c.idVendedor
@@ -29,8 +11,8 @@ LEFT JOIN silver.olist.item_pedido AS c
   ON a.idPedido = c.idPedido
 
 WHERE c.idVendedor IS NOT NULL
-  AND b.dtPedido < '2018-01-01'
-  AND b.dtPedido >= ADD_MONTHS('2018-01-01', -6)),
+  AND b.dtPedido < '{date}'
+  AND b.dtPedido >= ADD_MONTHS('{date}', -6)),
 
 base_agrupada AS (
 SELECT idVendedor,
@@ -83,14 +65,10 @@ SELECT a.*,
   b.mediana_de_parcelas,
   b.max_parcelas,
   b.min_parcelas,
-  '2018-01-01'  AS data_refenrencia
+  '{date}'  AS data_refenrencia,
+  NOW() AS dtIngestion
 
 FROM base_perc_pagamentos AS a
 
 LEFT JOIN base_cartao AS b
   ON a.idVendedor = b.idVendedor  
-
-
--- COMMAND ----------
-
-
