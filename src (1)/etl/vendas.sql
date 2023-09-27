@@ -41,7 +41,6 @@ base_min_max AS (
   SELECT idVendedor,
     MIN(valor_preco) AS min_valor_pedido,
     MAX(valor_preco) AS max_valor_pedido
-
   FROM base_resumo_pedido
 
   GROUP BY idVendedor),
@@ -51,6 +50,7 @@ base_lifetime AS(
   SELECT b.idVendedor,
     SUM(vlPreco) AS LTV,
     MAX(DATEDIFF('{date}', dtPedido)) AS qtd_dias_base
+
 
   FROM silver.olist.pedido AS a
 
@@ -82,7 +82,6 @@ base_lag AS(
 base_intervalo AS (
   SELECT idVendedor,
     AVG(DATEDIFF(dtPedido, lag1)) AS media_intervalo_vendas
-
   FROM base_lag
 
   GROUP BY idVendedor)
